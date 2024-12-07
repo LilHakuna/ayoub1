@@ -14,6 +14,30 @@
         </div>
         <button id="reset-button">Reset Game</button>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  // Join a room (two players can join the same room)
+  socket.emit('joinRoom', 'room1');
+
+  // Listen for the game start event
+  socket.on('startGame', (message) => {
+    alert(message);
+  });
+
+  // Send move data to the server
+  function makeMove(cellId) {
+    socket.emit('move', { room: 'room1', cell: cellId });
+  }
+
+  // Listen for move updates from other player
+  socket.on('move', (data) => {
+    // Update game UI based on the move
+    console.log(data);
+  });
+</script>
+
 
     <script src="app.js"></script>
 </body>
